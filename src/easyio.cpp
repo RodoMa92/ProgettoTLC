@@ -334,7 +334,7 @@ int scanstring(char *parm) {
 //	def   : proposed default
 //
 
-short read_bool(char *prompt, short def) {
+short read_bool(char const *prompt, short def) {
     int answer;
     for (int timeout = 0; timeout <= 5; timeout++) {
         if (def == false)
@@ -365,7 +365,7 @@ short read_bool(char *prompt, short def) {
 //
 // overloaded version without default
 //
- short read_bool(char *prompt) {
+ short read_bool(char const *prompt) {
     return (read_bool(prompt, true));
 }
 
@@ -382,7 +382,7 @@ short read_bool(char *prompt, short def) {
 //	min   : inferior limit
 //	max   : superior limit
 //
-int read_digit(char *prompt, int def, int min, int max) {
+int read_digit(char const *prompt, int def, int min, int max) {
 
     if (min < 0) min = 0;
     if (max < 0) max = 0;
@@ -430,14 +430,14 @@ int read_digit(char *prompt, int def, int min, int max) {
 //
 // overloaded version with no check
 //
- int read_digit(char *prompt, int def) {
+ int read_digit(char const *prompt, int def) {
     return (read_digit(prompt, def, 0, 9));
 }
 
 //
 // overloaded version with no check and default
 //
- int read_digit(char *prompt) {
+ int read_digit(char const *prompt) {
     return (read_digit(prompt, 0, 0, 9));
 }
 
@@ -455,7 +455,7 @@ int read_digit(char *prompt, int def, int min, int max) {
 //	max   : superior limit
 //
 
-int read_int(char *prompt, char *unit, int def, int min, int max) {
+int read_int(char const *prompt, char *unit, int def, int min, int max) {
 
     if (min > max) {
         int tmp = min;
@@ -499,19 +499,19 @@ int read_int(char *prompt, char *unit, int def, int min, int max) {
 //
 // overloading without unit and/or range
 //
-int read_int(char *prompt, int def, int min, int max) {
+int read_int(char const *prompt, int def, int min, int max) {
     return (read_int(prompt, new char, def, min, max));
 }
 
- int read_int(char *prompt, char *unit, int def) {
+ int read_int(char const *prompt, char *unit, int def) {
     return (read_int(prompt, unit, def, EIO_MIN_INT, EIO_MAX_INT));
 }
 
- int read_int(char *prompt, int def) {
+ int read_int(char const *prompt, int def) {
     return (read_int(prompt, def, EIO_MIN_INT, EIO_MAX_INT));
 }
 
- int read_int(char *prompt) {
+ int read_int(char const *prompt) {
     return (read_int(prompt, 0, EIO_MIN_INT, EIO_MAX_INT));
 }
 
@@ -527,7 +527,7 @@ int read_int(char *prompt, int def, int min, int max) {
 //	max   : superior limit
 //
 
-long read_long(char *prompt, char *unit, long def, long min, long max) {
+long read_long(char const *prompt, char *unit, long def, long min, long max) {
 
     if (min > max) {
         long tmp = min;
@@ -571,19 +571,19 @@ long read_long(char *prompt, char *unit, long def, long min, long max) {
 //
 // overloading without unit and/or range
 //
-long read_long(char *prompt, long def, long min, long max) {
+long read_long(char const *prompt, long def, long min, long max) {
     return (read_long(prompt, new char, def, min, max));
 }
 
- long read_long(char *prompt, char *unit, long def) {
+ long read_long(char const *prompt, char *unit, long def) {
     return (read_long(prompt, unit, def, EIO_MIN_INT, EIO_MAX_INT));
 }
 
- long read_long(char *prompt, long def) {
+ long read_long(char const *prompt, long def) {
     return (read_long(prompt, def, EIO_MIN_INT, EIO_MAX_INT));
 }
 
- long read_long(char *prompt) {
+ long read_long(char const *prompt) {
     return (read_long(prompt, 0, EIO_MIN_INT, EIO_MAX_INT));
 }
 
@@ -599,7 +599,7 @@ long read_long(char *prompt, long def, long min, long max) {
 //	max   : superior limit
 //
 
-double read_double(char *prompt, char *unit, double def,
+double read_double(char const *prompt, char *unit, double def,
                    double min, double max) {
 
     if (min > max) {
@@ -643,19 +643,19 @@ double read_double(char *prompt, char *unit, double def,
 //
 // overloading without unit and/or range
 
-double read_double(char *prompt, double def, double min, double max) {
+double read_double(char const *prompt, double def, double min, double max) {
     return (read_double(prompt, new char, def, min, max));
 }
 
- double read_double(char *prompt, char *unit, double def) {
+ double read_double(char const *prompt, char *unit, double def) {
     return (read_double(prompt, unit, def, EIO_MIN_INT, EIO_MAX_INT));
 }
 
- double read_double(char *prompt, double def) {
+ double read_double(char const *prompt, double def) {
     return (read_double(prompt, def, EIO_MIN_INT, EIO_MAX_INT));
 }
 
- double read_double(char *prompt) {
+ double read_double(char const *prompt) {
     return (read_double(prompt, 0, EIO_MIN_INT, EIO_MAX_INT));
 }
 
@@ -669,7 +669,7 @@ double read_double(char *prompt, double def, double min, double max) {
 //	def   : proposed default
 //
 
-char *read_string(char *prompt, char *def) {
+char *read_string(char const *prompt, char *def) {
 
     short esito;
     static char stringa[EASYIO_MAX_STR_LEN];
@@ -698,7 +698,7 @@ char *read_string(char *prompt, char *def) {
 //
 // overloading without default
 //
- char *read_string(char *prompt) {
+ char *read_string(char const *prompt) {
     return (read_string(prompt, new char));
 }
 

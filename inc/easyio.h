@@ -35,43 +35,43 @@ extern		void 	beep();
 extern		void 	pausa();
 extern		char	readln ();
 
-extern	 	short 	read_bool(char *, short);
+extern	 	short 	read_bool(char const *, short);
 
-extern		short 	read_bool(char *);
+extern		short 	read_bool(char const *);
 
-extern	 	int 	read_digit(char *, int, int, int);
+extern	 	int 	read_digit(char const *, int, int, int);
 
-extern		int 	read_digit(char *, int);
+extern		int 	read_digit(char const *, int);
 
-extern		int 	read_digit(char *);
+extern		int 	read_digit(char const *);
 
-extern		int 	read_int(char *, char *, int, int, int);
-extern		int 	read_int(char *, int, int, int);
+extern		int 	read_int(char const *, char *, int, int, int);
+extern		int 	read_int(char const *, int, int, int);
 
-extern		int 	read_int(char *, char *, int);
+extern		int 	read_int(char const *, char *, int);
 
-extern		int 	read_int(char *, int);
+extern		int 	read_int(char const *, int);
 
-extern		int 	read_int(char *);
+extern		int 	read_int(char const *);
 
-extern		long 	read_long(char *, char *, long, long, long);
-extern		long 	read_long(char *, long, long, long);
+extern		long 	read_long(char const *, char *, long, long, long);
+extern		long 	read_long(char const *, long, long, long);
 
-extern		long 	read_long(char *, char *, long);
-extern		long 	read_long(char *, long);
-extern		long 	read_long(char *);
+extern		long 	read_long(char const *, char *, long);
+extern		long 	read_long(char const *, long);
+extern		long 	read_long(char const *);
 
-extern		double 	read_double(char *, char *, double, double, double);
-extern		double 	read_double(char *, double, double, double);
+extern		double 	read_double(char const *, char *, double, double, double);
+extern		double 	read_double(char const *, double, double, double);
 
-extern		double 	read_double(char *, char *, double);
+extern		double 	read_double(char const *, char *, double);
 
-extern		double 	read_double(char *, double);
+extern		double 	read_double(char const *, double);
 
-extern		double 	read_double(char *);
+extern		double 	read_double(char const *);
 
-extern		char * 	read_string(char *, char *);
+extern		char * 	read_string(char const *, char *);
 
-extern		char * 	read_string(char *);
+extern		char * 	read_string(char const *);
 
 #endif    // _EASYIOPLUS_H
