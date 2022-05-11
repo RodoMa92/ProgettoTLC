@@ -455,7 +455,7 @@ int read_digit(char const *prompt, int def, int min, int max) {
 //	max   : superior limit
 //
 
-int read_int(char const *prompt, char *unit, int def, int min, int max) {
+int read_int(char const *prompt, char const *unit, int def, int min, int max) {
 
     if (min > max) {
         int tmp = min;
@@ -491,7 +491,6 @@ int read_int(char const *prompt, char *unit, int def, int min, int max) {
     }
     fprintf(FPTR, "\n FATAL ERROR: too many wrong attempts ");
     fprintf(FPTR, "in read_int() \n");
-    delete unit;
     exit(-1);
 }
 
@@ -503,7 +502,7 @@ int read_int(char const *prompt, int def, int min, int max) {
     return (read_int(prompt, new char, def, min, max));
 }
 
- int read_int(char const *prompt, char *unit, int def) {
+ int read_int(char const *prompt, char const *unit, int def) {
     return (read_int(prompt, unit, def, EIO_MIN_INT, EIO_MAX_INT));
 }
 
@@ -527,7 +526,7 @@ int read_int(char const *prompt, int def, int min, int max) {
 //	max   : superior limit
 //
 
-long read_long(char const *prompt, char *unit, long def, long min, long max) {
+long read_long(char const *prompt, char const *unit, long def, long min, long max) {
 
     if (min > max) {
         long tmp = min;
@@ -563,7 +562,6 @@ long read_long(char const *prompt, char *unit, long def, long min, long max) {
     }
     fprintf(FPTR, "\n FATAL ERROR: too many wrong attempts ");
     fprintf(FPTR, "in read_long() \n");
-    delete unit;
     exit(-1);
 }
 
@@ -599,7 +597,7 @@ long read_long(char const *prompt, long def, long min, long max) {
 //	max   : superior limit
 //
 
-double read_double(char const *prompt, char *unit, double def,
+double read_double(char const *prompt, char const *unit, double def,
                    double min, double max) {
 
     if (min > max) {
@@ -644,10 +642,10 @@ double read_double(char const *prompt, char *unit, double def,
 // overloading without unit and/or range
 
 double read_double(char const *prompt, double def, double min, double max) {
-    return (read_double(prompt, new char, def, min, max));
+    return (read_double(prompt, "", def, min, max));
 }
 
- double read_double(char const *prompt, char *unit, double def) {
+ double read_double(char const *prompt, char const *unit, double def) {
     return (read_double(prompt, unit, def, EIO_MIN_INT, EIO_MAX_INT));
 }
 

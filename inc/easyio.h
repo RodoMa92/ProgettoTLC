@@ -45,26 +45,26 @@ extern		int 	read_digit(char const *, int);
 
 extern		int 	read_digit(char const *);
 
-extern		int 	read_int(char const *, char *, int, int, int);
+extern		int 	read_int(char const *, char const *, int, int, int);
 extern		int 	read_int(char const *, int, int, int);
 
-extern		int 	read_int(char const *, char *, int);
+extern		int 	read_int(char const *, char const *, int);
 
 extern		int 	read_int(char const *, int);
 
 extern		int 	read_int(char const *);
 
-extern		long 	read_long(char const *, char *, long, long, long);
+extern		long 	read_long(char const *, char const *, long, long, long);
 extern		long 	read_long(char const *, long, long, long);
 
 extern		long 	read_long(char const *, char *, long);
 extern		long 	read_long(char const *, long);
 extern		long 	read_long(char const *);
 
-extern		double 	read_double(char const *, char *, double, double, double);
+extern		double 	read_double(char const *, char const *, double, double, double);
 extern		double 	read_double(char const *, double, double, double);
 
-extern		double 	read_double(char const *, char *, double);
+extern		double 	read_double(char const *, char const *, double);
 
 extern		double 	read_double(char const *, double);
 
