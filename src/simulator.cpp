@@ -7,6 +7,7 @@
 
 #include <cstdio>
 #include "../inc/simulator.h"
+#include "queue.h"
 #include <cstdlib>
 
 inline void GoFatal() {
@@ -63,5 +64,13 @@ simulator::simulator(int argc, char *argv[]) {
     fptrc = NULL;
     fpout = NULL;
     read_args(argc, argv);
+}
+
+void simulator::setProbabilities(double prob1) {
+
+}
+
+void simulator::setLinkedNodes(queue *node1, queue *node2) {
+
 }
 

@@ -15,35 +15,37 @@ public:
 	event*	next;	// next event
 	double 	time;	// event time
 	event();
-	event(double Time);
+	event(double Time, queue* ref);
 	event(event* Next, double Time);
 	~event(){}
 	virtual void body(){}
 };
 
 inline event::event(){
-	next=NULL;
+	next=nullptr;
 	time=-1;
 	}
 
-inline event::event(event* Next, double Time){
+inline event::event(event* Next, double Time, queue* ref){
 	next=Next;
 	time=Time;
+    myqueue = ref;
 	}
 
-inline event::event(double Time){
+inline event::event(double Time, queue* ref){
 	time=Time;
+    myqueue = ref;
 	}
 
 class arrival: public event{
 
-	buffer* buf;
+    buffer* buf;
 
 	public:
 	int source_id;
 	virtual void body();
-	arrival(double Time, buffer* Buf);
-	};
+	arrival(double Time, buffer *Buf, queue *queue_ref);
+};
 
 class service: public event{
 
@@ -54,9 +56,10 @@ class service: public event{
 	service(double Time, buffer* Buf): event(Time){buf=Buf;}
 	};
 
-inline arrival::arrival(double Time, buffer* Buf): event(Time){
+inline arrival::arrival(double Time, buffer *Buf, queue *queue_ref) : event(Time, queue_ref){
 	buf=Buf;
 	}
+
 
 #endif
 

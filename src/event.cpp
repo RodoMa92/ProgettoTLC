@@ -9,32 +9,35 @@
 
 extern calendar *cal;
 extern double inter;
-extern double duration;
+extern double packet_length;
 
 void arrival::body() {
     event *ev;
-
-    // generation of next arrival
-    double esito;
-    GEN_EXP(SEED, inter, esito);
-    ev = new arrival(time + esito, buf);
-    cal->put(ev);
-
-    // insert the new packet in the queue
-    packet *pack = new packet(time);
-    // if some packet is already in the buffer, just insert the new one
-    if (buf->full() || buf->status) {
-        buf->insert(pack);
-    }
-        // otherwise let the packet get in the service
-    else {
-        buf->tot_packs += 1.0;
-        delete pack;
-        GEN_EXP(SEED, duration, esito);
-        ev = new service(time + esito, buf);
+    if (this->with_lambda) {
+        // generation of next arrival
+        double esito;
+        GEN_EXP(SEED, inter, esito);
+        ev = new arrival(time + esito, buf, this->myqueue);
         cal->put(ev);
-        buf->status = 1;
+
+        // insert the new packet in the queue
+        packet *pack = new packet(time, esito);
+        // if some packet is already in the buffer, just insert the new one
+        if (buf->full() || buf->status) {
+            buf->insert(pack);
+        }
+            // otherwise let the packet get in the service
+        else {
+            buf->tot_packs += 1.0;
+            delete pack;
+            GEN_EXP(SEED, packet_length, esito);
+            ev = new service(time + esito, buf);
+            cal->put(ev);
+            buf->status = 1;
+        }
     }
+    double flip;
+    PSEUDO(SEED, flip);
 }
 
 void service::body() {
@@ -43,7 +46,7 @@ void service::body() {
     pack = buf->get();
     event *ev;
     double esito;
-    GEN_EXP(SEED, duration, esito);
+    GEN_EXP(SEED, packet_length, esito);
     if (pack != NULL) {
         ev = new service(time + esito, buf);
         cal->put(ev);
