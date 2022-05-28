@@ -22,7 +22,7 @@ public:
 };
 
 inline event::event(){
-	next=NULL;
+	next=nullptr;
 	time=-1;
 	}
 
@@ -38,7 +38,7 @@ inline event::event(double Time){
 class arrival: public event{
 
 	buffer* buf;
-
+    double * capacities, *probabilities;
 	public:
 	int source_id;
 	virtual void body();
@@ -57,6 +57,5 @@ class service: public event{
 inline arrival::arrival(double Time, buffer* Buf): event(Time){
 	buf=Buf;
 	}
-
 #endif
 

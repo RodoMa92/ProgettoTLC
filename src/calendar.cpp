@@ -7,7 +7,7 @@
 #include "../inc/calendar.h"
 
 
-event *calendar::get() {
+event *calendar::pop() {
     if (head == nullptr)
         return nullptr;
     event *ev;
@@ -23,7 +23,7 @@ event *calendar::get() {
     return ev;
 }
 
-void calendar::put(event *New) {
+void calendar::pushAndReorder(event *New) {
     event *temp = head;
     if (head == nullptr) {
         head = New;

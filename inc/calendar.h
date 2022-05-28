@@ -18,8 +18,8 @@ class calendar{
 
 	calendar();
 	~calendar();
-	event* 	get();
-	void	put(event* New_event);
+	event* 	pop();
+	void	pushAndReorder(event* New);
 	};
 
 

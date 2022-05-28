@@ -17,11 +17,13 @@ class buffer	{
 public:
 	buffer();
 	~buffer(){}
-	void insert(packet* pack);
-	packet* get();
+	void push(packet* pack);
+	packet* pop();
 	packet* full(){return head;}
 	double tot_delay;
 	double tot_packs;
-	};
+
+    packet *get();
+};
 
 #endif

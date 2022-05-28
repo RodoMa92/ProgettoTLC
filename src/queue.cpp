@@ -13,7 +13,9 @@
 
 calendar *cal;        // events calendar
 double inter;
-double duration;
+double length;
+double capacities[4];
+double probabilities[3] = {.5,.1,.1};
 double Trslen;
 double Runlen;
 int NRUNmin;
@@ -41,8 +43,12 @@ void queue::input() {
     printf("\n Service model:\n");
     printf("1 - Exponential:>\n");
     service_model = read_int("", 1, 1, 1);
-    duration = read_double("Average service duration (s)", 0.4, 0.01, 100);
-    inter = duration / load;
+    length = read_double("Average packet length [bits]", 50, 10, 300);
+    capacities[0] = read_int("Link capacity 1", 100, 10, 3000);
+    capacities[1] = read_int("Link capacity 2", 100, 10, 3000);
+    capacities[2] = read_int("Link capacity 3", 100, 10, 3000);
+    capacities[3] = read_int("Link capacity 4", 100, 10, 3000);
+    inter = (length/capacities[0]) / load;
     printf("SIMULATION PARAMETERS:\n\n");
     Trslen = read_double("Simulation transient len (s)", 100, 0.01, 10000);
     Trslen = Trslen;
@@ -56,7 +62,7 @@ void queue::init() {
     input();
     event *Ev;
     Ev = new arrival(0.0, buf);
-    cal->put(Ev);
+    cal->pushAndReorder(Ev);
     buf->status = 0;
 }
 
@@ -70,7 +76,7 @@ void queue::run() {
     double clock = 0.0;
     event *ev;
     while (clock < Trslen) {
-        ev = cal->get();
+        ev = cal->pop();
         ev->body();
         clock = ev->time;
         delete (ev);
@@ -80,7 +86,7 @@ void queue::run() {
     int current_run_number = 1;
     while (current_run_number <= NRUNmin) {
         while (clock < (current_run_number * Runlen + Trslen)) {
-            ev = cal->get();
+            ev = cal->pop();
             ev->body();
             clock = ev->time;
             delete (ev);
@@ -107,14 +113,14 @@ void queue::results() {
     fprintf(fpout, "Run length (s)               %5.3f\n", Runlen);
     fprintf(fpout, "Number of runs               %5d\n", NRUNmin);
     fprintf(fpout, "Traffic load                 %5.3f\n", load);
-    fprintf(fpout, "Average service duration     %5.3f\n", duration);
+    fprintf(fpout, "Average service length     %5.3f\n", length);
     fprintf(fpout, "Results:\n");
     fprintf(fpout, "Average Delay                %2.6f   +/- %.2e  p:%3.2f\n",
             delay->mean(),
             delay->confidence(.95),
             delay->confpercerr(.95));
     fprintf(fpout, "D  %2.6f   %2.6f   %.2e %2.6f\n", load, delay->mean(), delay->confidence(.95),
-            duration * (load) / (1 - load));
+            length * (load) / (1 - load));
 }
 
 void queue::print_trace(int n) {

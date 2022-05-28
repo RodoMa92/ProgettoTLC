@@ -12,7 +12,7 @@ buffer::buffer() {
     tot_packs = 0.0;
 }
 
-void buffer::insert(packet *pack) {
+void buffer::push(packet *pack) {
     if (head == nullptr) {
         head = pack;
         last = pack;
@@ -24,7 +24,11 @@ void buffer::insert(packet *pack) {
     }
 }
 
-packet *buffer::get() {
+/**
+ * Estrae un pacchetto dalla coda e lo ritorna
+ * @return Il pacchetto rimosso dalla coda.
+ */
+packet *buffer::pop() {
     packet *pack;
     if (head == nullptr)
         return nullptr;
@@ -38,5 +42,17 @@ packet *buffer::get() {
         last->next = head;
     }
     return pack;
+}
+
+/**
+ * Ritorna la testa della coda SENZA rimuoverla dalla coda.
+ * NON cancellare il puntatore con delete.
+ * @return Il primo pacchetto all'interno della lista.
+ */
+packet *buffer::get(){
+    packet *pack;
+    if (head == nullptr)
+        return nullptr;
+    else return head;
 }
 	
