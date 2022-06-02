@@ -15,6 +15,9 @@ class queue: public simulator{
 
 	virtual void input(void);
 	buffer* buf;            // queue buffer
+	buffer* buf_node2;
+	buffer* buf_node3;
+	buffer* buf_node4;
 	int	traffic_model;
 	double	load;
 	int	service_model;

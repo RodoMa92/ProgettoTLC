@@ -24,7 +24,7 @@ public:
 inline event::event(){
 	next=nullptr;
 	time=-1;
-	}
+}
 
 inline event::event(event* Next, double Time){
 	next=Next;
@@ -38,24 +38,98 @@ inline event::event(double Time){
 class arrival: public event{
 
 	buffer* buf;
-    double * capacities, *probabilities;
+	buffer* buf_left;
+	buffer* buf_right;
+	buffer* buf_last;
+	
 	public:
-	int source_id;
+	packet* pack;
 	virtual void body();
-	arrival(double Time, buffer* Buf);
-	};
+	arrival(double Time, buffer* buf1, buffer* buf2, buffer* buf3, buffer* buf4);
+};
 
 class service: public event{
 
 	buffer* buf;
-
+	buffer* buf_left;
+	buffer* buf_right;
+	buffer* buf_last;
 	public:
 	virtual void body();
-	service(double Time, buffer* Buf): event(Time){buf=Buf;}
-	};
-
-inline arrival::arrival(double Time, buffer* Buf): event(Time){
-	buf=Buf;
+	service(double Time, buffer* buf1, buffer* buf2, buffer* buf3, buffer* buf4): event(Time){
+		buf = buf1;
+		buf_left = buf2;
+		buf_right = buf3;
+		buf_last = buf4;
 	}
+};
+
+inline arrival::arrival(double Time, buffer* buf1, buffer* buf2, buffer* buf3, buffer* buf4): event(Time){
+	buf = buf1;
+	buf_left = buf2;
+	buf_right = buf3;
+	buf_last = buf4;
+	pack = nullptr;
+}
+class arrival23: public event{
+
+	buffer* buf;
+	buffer* buf_left;
+	buffer* buf_right;
+	buffer* buf_last;
+	
+	public:
+	packet* pack;
+	virtual void body();
+	arrival23(double Time, buffer* buf1, buffer* buf2, buffer* buf3, buffer* buf4);
+};
+
+class service23: public event{
+
+	buffer* buf;
+	buffer* buf_left;
+	buffer* buf_right;
+	buffer* buf_last;
+	public:
+	virtual void body();
+	service23(double Time, buffer* buf1, buffer* buf2, buffer* buf3, buffer* buf4): event(Time){
+		buf = buf1;
+		buf_left = buf2;
+		buf_right = buf3;
+		buf_last = buf4;
+	}
+};
+
+inline arrival23::arrival23(double Time, buffer* buf1, buffer* buf2, buffer* buf3, buffer* buf4): event(Time){
+	buf = buf1;
+	buf_left = buf2;
+	buf_right = buf3;
+	buf_last = buf4;
+	pack = nullptr;
+}
+class arrival4: public event{
+
+	buffer* buf;
+	
+	public:
+	packet* pack;
+	virtual void body();
+	arrival4(double Time, buffer* buf1);
+};
+
+class service4: public event{
+
+	buffer* buf;
+	public:
+	virtual void body();
+	service4(double Time, buffer* buf1): event(Time){
+		buf = buf1;
+	}
+};
+
+inline arrival4::arrival4(double Time, buffer* buf1): event(Time){
+	buf = buf1;
+	pack = nullptr;
+}
 #endif
 

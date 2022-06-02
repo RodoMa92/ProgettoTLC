@@ -25,6 +25,9 @@ int NRUNmax;
 queue::queue(int argc, char *argv[]) : simulator(argc, argv) {
     cal = new calendar();
     buf = new buffer();
+    buf_node2 = new buffer();
+    buf_node3 = new buffer();
+    buf_node4 = new buffer();
     delay = new Sstat();
 }
 
@@ -32,6 +35,9 @@ queue::~queue() {
     delete delay;
     delete cal;
     delete buf;
+    delete buf_node2;
+    delete buf_node3;
+    delete buf_node4;
 }
 
 void queue::input() {
@@ -44,24 +50,24 @@ void queue::input() {
     printf("1 - Exponential:>\n");
     service_model = read_int("", 1, 1, 1);
     length = read_double("Average packet length [bits]", 50, 10, 300);
-    capacities[0] = read_int("Link capacity 1", 100, 10, 3000);
-    capacities[1] = read_int("Link capacity 2", 100, 10, 3000);
-    capacities[2] = read_int("Link capacity 3", 100, 10, 3000);
-    capacities[3] = read_int("Link capacity 4", 100, 10, 3000);
+    capacities[0] = read_int("Link capacity 1 [bits/s]", 10, 10, 3000);
+    capacities[1] = read_int("Link capacity 2 [bits/s]", 70, 10, 3000);
+    capacities[2] = read_int("Link capacity 3 [bits/s]", 400, 10, 3000);
+    capacities[3] = read_int("Link capacity 4 [bits/s]", 2000, 10, 3000);
     inter = (length/capacities[0]) / load;
     printf("SIMULATION PARAMETERS:\n\n");
-    Trslen = read_double("Simulation transient len (s)", 100, 0.01, 10000);
+    Trslen = read_double("Simulation transient len [s]", 100, 0.01, 10000);
     Trslen = Trslen;
-    Runlen = read_double("Simulation RUN len (s)", 100, 0.01, 10000);
+    Runlen = read_double("Simulation RUN len [s]", 100, 0.01, 10000);
     Runlen = Runlen;
-    NRUNmin = read_int("Simulation number of RUNs", 5, 2, 100);
+    NRUNmin = read_int("Simulation number of RUNs", 11, 2, 100);
 }
 
 
 void queue::init() {
     input();
     event *Ev;
-    Ev = new arrival(0.0, buf);
+    Ev = new arrival(0.0, buf, buf_node2, buf_node3, buf_node4);
     cal->pushAndReorder(Ev);
     buf->status = 0;
 }
@@ -115,7 +121,7 @@ void queue::results() {
     fprintf(fpout, "Traffic load                 %5.3f\n", load);
     fprintf(fpout, "Average service length     %5.3f\n", length);
     fprintf(fpout, "Results:\n");
-    fprintf(fpout, "Average Delay                %2.6f   +/- %.2e  p:%3.2f\n",
+    fprintf(fpout, "Crossing Time                %2.6f   +/- %.2e  p:%3.2f\n",
             delay->mean(),
             delay->confidence(.95),
             delay->confpercerr(.95));
@@ -129,7 +135,7 @@ void queue::print_trace(int n) {
     fprintf(fptrc, "*********************************************\n\n");
 
 
-    fprintf(fptrc, "Average Delay                %2.6f   +/- %.2e  p:%3.2f\n",
+    fprintf(fptrc, "Crossing Time                %2.6f   +/- %.2e  p:%3.2f\n",
             delay->mean(),
             delay->confidence(.95),
             delay->confpercerr(.95));
@@ -138,8 +144,8 @@ void queue::print_trace(int n) {
 }
 
 void queue::clear_counters() {
-    buf->tot_delay = 0.0;
-    buf->tot_packs = 0.0;
+    buf_node4->tot_delay = 0.0;
+    buf_node4->tot_packs = 0.0;
 }
 
 void queue::clear_stats() {
@@ -147,7 +153,7 @@ void queue::clear_stats() {
 }
 
 void queue::update_stats() {
-    *delay += buf->tot_delay / buf->tot_packs;
+    *delay += buf_node4->tot_delay / buf_node4->tot_packs;
 }
 
 int queue::isconfsatisf(double perc) {
