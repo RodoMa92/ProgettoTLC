@@ -118,7 +118,7 @@ void arrival23::body() {
         event *ev2;
         int currentNode = pack->getNode();
         ev = new service23(time + esito / capacities[currentNode - 1], buf, buf_left, buf_right, buf_last);
-        int node = coin <= probabilities[0] ? 1 : 4;
+        int node = coin <= probabilities[currentNode-1] ? 1 : 4;
         pack->setNode(node);
         if (node == 1) {
             if (currentNode == 2) {
@@ -158,7 +158,7 @@ void service23::body() {
 	    PSEUDO(SEED, coin);
 		int currentNode = pack->getNode();
 		ev = new service23(time+esito/capacities[currentNode-1], buf, buf_left, buf_right, buf_last);
-		int node = coin<=probabilities[0] ? 1 : 4;
+		int node = coin<=probabilities[currentNode-1] ? 1 : 4;
 		pack->setNode(node);
 		if (node == 1) {
 			if (currentNode == 2) {
