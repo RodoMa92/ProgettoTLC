@@ -45,22 +45,22 @@ void queue::input() {
     printf("\n Arrivals model:\n");
     printf("1 - Poisson:>\n");
     traffic_model = read_int("", 1, 1, 1);
-    load = read_double("Traffic load (Erlang)", 0.4, 0.01, 0.999);
+    load = read_double("Lambda", 1, 0.01, 1000);
     printf("\n Service model:\n");
     printf("1 - Exponential:>\n");
     service_model = read_int("", 1, 1, 1);
-    length = read_double("Average packet length [bits]", 50, 10, 300);
-    capacities[0] = read_int("Link capacity 1 [bits/s]", 10, 10, 3000);
-    capacities[1] = read_int("Link capacity 2 [bits/s]", 70, 10, 3000);
-    capacities[2] = read_int("Link capacity 3 [bits/s]", 400, 10, 3000);
-    capacities[3] = read_int("Link capacity 4 [bits/s]", 2000, 10, 3000);
-    inter = (length/capacities[0]) / load;
+    length = read_double("Average packet length [bits]", 1024, 10, 10000);
+    capacities[0] = read_int("Link capacity 1 [bits/s]", 1048576, 10, 2000000);
+    capacities[1] = read_int("Link capacity 2 [bits/s]", 1048576, 10, 2000000);
+    capacities[2] = read_int("Link capacity 3 [bits/s]", 1048576, 10, 2000000);
+    capacities[3] = read_int("Link capacity 4 [bits/s]", 1048576, 10, 2000000);
+    inter = 1 / load;
     printf("SIMULATION PARAMETERS:\n\n");
     Trslen = read_double("Simulation transient len [s]", 100, 0.01, 10000);
     Trslen = Trslen;
     Runlen = read_double("Simulation RUN len [s]", 100, 0.01, 10000);
     Runlen = Runlen;
-    NRUNmin = read_int("Simulation number of RUNs", 11, 2, 100);
+    NRUNmin = read_int("Simulation number of RUNs", 5, 2, 100);
 }
 
 

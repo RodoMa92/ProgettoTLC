@@ -18,15 +18,15 @@ extern double probabilities[3];
 void arrival::body() {
 	event *ev;
 	double esito;
-    // Generation of next arrival
-    GEN_EXP(SEED, inter, esito);
-    ev = new arrival(time + esito, buf, buf_left, buf_right, buf_last);
-    cal->pushAndReorder(ev);
     // Generation of packet
     packet *pack;
     if (this->pack != nullptr) {
     	pack = this->pack;
 	} else {
+        // Generation of next arrival
+        GEN_EXP(SEED, inter, esito);
+        ev = new arrival(time + esito, buf, buf_left, buf_right, buf_last);
+        cal->pushAndReorder(ev);
 		pack = new packet(time);
         pack->setNode(1);
 	}
